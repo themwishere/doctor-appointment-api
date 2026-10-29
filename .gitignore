@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+dicitonary_practice.py
+mainapi.py
+my-first-api.py
