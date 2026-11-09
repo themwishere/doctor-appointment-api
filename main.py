@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 
 app = FastAPI()
@@ -13,12 +13,15 @@ class Appointment(BaseModel):
     time: str
 
 
-@app.get('/appointments/{appointment_id}')
+@app.get("/appointments/{appointment_id}")
 def get_appointment(appointment_id: int):
-    return {
-        'appointment_id': appointment_id,
-        'status': 'confirmed'
-    }
+    for i in appointments:
+        if i["id"] == appointment_id:
+            return i
+    raise HTTPException(
+        status_code=404,
+        detail="Appointment not found"
+    )
 
 
 @app.post("/appointments")
